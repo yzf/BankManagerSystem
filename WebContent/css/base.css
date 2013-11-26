@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.clear {
+	float: none;
+}
+
+.container-top {
+	padding: 80px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.form-data {
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+.thumbnail {
+	width: 310px;
+}
+
+#backToHome {
+	margin-left: 20px;
+}
+
+.radio-margin {
+	margin: 10px;
+}
+
+#enterprise {
+	display: none;
+}
+
+.create-form {
+	max-width: 380px;
+}
+
+.enterprise-form {
+	max-width: 350px;
+}
+
+.journal-form {
+	max-width: 350px;
+}
+
+.setting-form {
+	max-width: 400px;
+}

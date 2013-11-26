@@ -1,0 +1,77 @@
+package info.yzf.service.manager;
+
+import info.yzf.database.dao.IDepartmentDao;
+import info.yzf.database.dao.IEmployeeDao;
+import info.yzf.database.daoImpl.DepartmentDaoSerial;
+import info.yzf.database.daoImpl.EmployeeDaoSerial;
+import info.yzf.database.model.Department;
+import info.yzf.database.model.Employee;
+import info.yzf.util.Message;
+import info.yzf.util.Pair;
+
+import java.util.Vector;
+
+/**
+ * 负责处理雇员的管理器，单例模式
+ * @author yzf
+ *
+ */
+public class EmployeeManager {
+	
+	private IEmployeeDao employeeDao;
+	private IDepartmentDao departmentDao;
+	
+	private EmployeeManager() {
+		employeeDao = new EmployeeDaoSerial();
+		departmentDao = new DepartmentDaoSerial();
+	}
+
+	private static class InstanceHolder {
+		private static EmployeeManager instance = new EmployeeManager();
+	}
+	
+	public static EmployeeManager getInstance() {
+		return InstanceHolder.instance;
+	}
+	/**
+	 * 登陆验证
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public Employee get(String username, String password) {
+		return employeeDao.get(username, password);
+	}
+	/**
+	 * 添加员工
+	 * @param boss
+	 * @param name
+	 * @param username
+	 * @param password
+	 * @param type
+	 * @return
+	 */
+	public Pair add(String name, String username, String password, int type, int depId) throws Exception {
+		if (employeeDao.get(username) != null) {
+			throw new Exception(Message.UsernameExist);
+		}
+		if (departmentDao.get(depId) == null) {
+			throw new Exception(Message.DepNotExist);
+		}
+		if (type != Employee.Conductor) {
+			if (type == Employee.Manager && departmentDao.hasManager(depId)) {
+				throw new Exception(Message.ManagerExist);
+			}
+			Employee e = new Employee(name, username, password, type, departmentDao.get(depId));
+			employeeDao.add(e);
+		}
+		else {
+			Employee e = new Employee(name, username, password, type, null);
+			employeeDao.add(e);
+		}
+		return new Pair(null, null);
+	}
+	public Vector<Department> getDepartments() {
+		return departmentDao.get();
+	}
+}
