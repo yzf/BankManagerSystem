@@ -37,7 +37,7 @@
 				</c:if>
 			</div>
 			<div id="dep" class="radio-margin">部门：
-				<select name="depId">
+				<select name="depId" style="width: 240px;">
 				<c:forEach items="${deps}" var="dep">
 					<option value="${dep.id }">${dep.name }</option>
 				</c:forEach>

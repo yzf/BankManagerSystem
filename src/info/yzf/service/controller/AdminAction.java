@@ -27,12 +27,18 @@ public class AdminAction extends HttpServlet {
 		request.setAttribute("operation", "admin");
 		request.setAttribute("message", Message.Success);
 		try {
+			String op = request.getParameter("op");
 			String name = request.getParameter("name");
 			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			int type = Integer.parseInt(request.getParameter("type"));
-			int depId = Integer.parseInt(request.getParameter("depId"));
-			EmployeeManager.getInstance().add(name, username, password, type, depId);
+			if ("add".equals(op)) {
+				String password = request.getParameter("password");
+				int type = Integer.parseInt(request.getParameter("type"));
+				int depId = Integer.parseInt(request.getParameter("depId"));
+				EmployeeManager.getInstance().add(name, username, password, type, depId);
+			}
+			else {
+				EmployeeManager.getInstance().delete(name, username);
+			}
 		} catch(Exception e) {
 			request.setAttribute("message", e.getLocalizedMessage());
 		}

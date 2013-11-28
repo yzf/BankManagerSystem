@@ -5,34 +5,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>查询</title>
+<title>存款取款</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/base.css" />
 </head>
 <body>
 	<jsp:include page="navbar.jsp" />
-
+	
 	<div class="container container-top">
-		<form class="form-data" action="Query.do" method="post">
-			<h2 class="form-data-heading">请输入用户信息</h2>
+		<form class="form-data" action="Deposit.do" method="post">
+			<h2 class="form-data-heading">请输入账户信息</h2>
 			<ul class="nav nav-tabs">
 			  	<li class="active tab-item" value="0">
-			    	<a href="#">账户余额</a>
+			    	<a href="#">存款</a>
 			  	</li>
 			  	<li class="tab-item" value="1">
-			  		<a href="#">账户操作</a>
+			  		<a href="#">取款</a>
 			  	</li>
 			</ul>
-			<input class="form-control" name="identity" type="text" placeholder="身份证" required autofocus />
-			<input class="form-control" name="username" type="text" placeholder="账号" required />
+			<input class="form-control" name="username" type="text" placeholder="账号" required autofocus />
 			<input class="form-control" name="password" type="password" placeholder="密码" required />
-			<div id="detailTime" style="display: none;">
-				<input class="form-control" id="begin" name="begin" type="text" placeholder="开始日期：yyyy-MM-dd" />
-				<input class="form-control" id="end" name="end" type="text" placeholder="结束日期：yyyy-MM-dd" />
-			</div>
+			<input class="form-control" name="money" type="text" placeholder="存款金额" required />
 			<label class="checkbox"></label>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">查询</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">存款</button>
 		</form>
 	</div>
 	
@@ -44,17 +40,15 @@
 		$(".tab-item").click(function () {
 			$(".tab-item").removeClass("active");
 			$(this).addClass("active");
-			if ($(this).val() == 0) {
-				$("#detailTime").hide();
-				$("#begin").val("");
-				$("#end").val("");
-				$("#begin").removeAttr("required");
-				$("#end").removeAttr("required");
+			if ($(this).val() == 0) {//存款
+				$("form").attr("action", "Deposit.do");
+				$("input[name='money']").attr("placeholder", "存款金额");
+				$("button").html("存款");
 			}
-			else {
-				$("#detailTime").show();
-				$("#begin").attr("required", "");
-				$("#end").attr("required", "");
+			else {//取款
+				$("form").attr("action", "Withdrawal.do");
+				$("input[name='money']").attr("placeholder", "取出金额");
+				$("button").html("取款");
 			}
 		});
 	};

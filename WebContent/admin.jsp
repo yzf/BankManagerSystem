@@ -19,31 +19,56 @@
 	%>
 	
 	<div class="container container-top">
-		<form class="form-data setting-form" action="Admin.do" method="post">
-			<h2 class="form-data-heading">请输入雇员信息</h2>
-			<input class="form-control" name="name" type="text" placeholder="雇员名称" required autofocus />
-			<input class="form-control" name="username" type="text" placeholder="账号" required />
-			<input class="form-control" name="password" type="password" placeholder="密码" required />
-			<div class="radio-margin">类型：
-				<label class="radio-inline">
-					<input name="type" value="0" type="radio" checked="checked" />前台操作人
-				</label>
-				<label class="radio-inline">
-					<input name="type" value="1" type="radio"/>银行经理
-				</label>
-				<label class="radio-inline">
-					<input name="type" value="2" type="radio"/>银行业务总管
-				</label>
+		<div class="row">
+			<div class="col-md-span3" style="">
+				<ul class="nav nav-list affix" style="width: 258px; top: 100px;">
+					<li class="list-item" value="0">
+						<a href="#">增加雇员</a>
+					</li>
+					<li class="list-item" value="1">
+						<a href="#">删除雇员</a>
+					</li>
+				</ul>
 			</div>
-			<div id="dep" class="radio-margin">部门：
-				<select name="depId">
-					<c:forEach items="${deps}" var="dep">
-					<option value="${dep.id }">${dep.name }</option>
-					</c:forEach>
-				</select>
+			<div id="form-add" class="col-md-span7">
+				<form class="form-data setting-form" action="Admin.do" method="post">
+				<input type="hidden" name="op" value="add" />
+					<h2 class="form-data-heading">请输入雇员信息</h2>
+					<input class="form-control" name="name" type="text" placeholder="雇员名称" required autofocus />
+					<input class="form-control" name="username" type="text" placeholder="账号" required />
+					<input class="form-control" name="password" type="password" placeholder="密码" required />
+					<div class="radio-margin">类型：
+						<label class="radio-inline">
+							<input name="type" value="0" type="radio" checked="checked" />前台操作人
+						</label>
+						<label class="radio-inline">
+							<input name="type" value="1" type="radio"/>银行经理
+						</label>
+						<label class="radio-inline">
+							<input name="type" value="2" type="radio"/>银行业务总管
+						</label>
+					</div>
+					<div id="dep" class="radio-margin">部门：
+						<select name="depId" style="width: 300px;">
+							<c:forEach items="${deps}" var="dep">
+							<option value="${dep.id }">${dep.name }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<button class="btn btn-lg btn-primary btn-block" type="submit">添加</button>
+				</form>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">添加</button>
-		</form>
+			<div id="form-delete" class="col-md-span7">
+				<form class="form-data setting-form" action="Admin.do" method="post">
+					<input type="hidden" name="op" value="delete" />
+					<h2 class="form-data-heading">请输入雇员信息</h2>
+					<input class="form-control" name="name" type="text" placeholder="雇员名称" required autofocus />
+					<input class="form-control" name="username" type="text" placeholder="账号" required />
+					<label class="checkbox"></label>
+					<button class="btn btn-lg btn-primary btn-block" type="submit">删除</button>
+				</form>
+			</div>
+		</div>
 	</div>
 	
 	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
@@ -57,6 +82,17 @@
 			}
 			else {
 				$("#dep").show();
+			}
+		});
+		$("#form-delete").hide();
+		$(".list-item").click(function () {
+			if ($(this).val() == 0) {
+				$("#form-add").show();
+				$("#form-delete").hide();
+			}
+			else {
+				$("#form-delete").show();
+				$("#form-add").hide();
 			}
 		});
 	};

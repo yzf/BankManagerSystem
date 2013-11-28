@@ -19,13 +19,11 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="createAccount.jsp">开户</a></li>
-						<li><a href="deposit.jsp">存款</a></li>
-						<li><a href="withdrawal.jsp">取款</a></li>
+						<li><a href="account.jsp">开户销户</a></li>
+						<li><a href="money.jsp">存款取款</a></li>
 						<li><a href="query.jsp">查询</a></li>
 						<li><a href="transfer.jsp">转账</a></li>
-						<li><a href="changePassword.jsp">修改密码</a></li>
-						<li><a href="closeAccount.jsp">销户</a></li>
+						<li><a href="password.jsp">修改密码</a></li>
 						<li><a href="enterprise.jsp">企业通道</a></li>
 						<li><a href="journal.jsp">日志操作</a></li>
 						<c:if test="${employee != null && employee.type == 3}">

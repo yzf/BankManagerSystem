@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class createOperatorAction
  */
 @WebServlet("/createOperatorAction")
-public class AddOperatorAction extends HttpServlet {
+public class OperatorAction extends HttpServlet {
        
 	private static final long serialVersionUID = -4272064552100511626L;
 
@@ -31,19 +31,30 @@ public class AddOperatorAction extends HttpServlet {
 		request.setAttribute("operation", "changePassword");
 		request.setAttribute("message", Message.Success);
 		try {
-			String identity = request.getParameter("identity").trim();
-			String username = request.getParameter("username").trim();
+			String op = request.getParameter("op");
+			String enIdentity = request.getParameter("enIdentity");
+			String enName = request.getParameter("enName");
+			String identity = request.getParameter("identity");
+			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			String newIdentity = request.getParameter("newIdentity").trim();
-			String newName = request.getParameter("newName").trim();
-			String newPassword = request.getParameter("newPassword");
-			String newPasswordAgain = request.getParameter("newPasswordAgain");
-			int role = Integer.parseInt(request.getParameter("role"));
-			//添加操作人
+			String newIdentity = request.getParameter("newIdentity");
+			String newName = request.getParameter("newName");
 			Employee employee = (Employee) request.getSession().getAttribute("employee");
-			Pair pair = UserAccountManager.getInstance().addOperator(employee, identity, username, 
-					password, newIdentity, newName, newPassword, newPasswordAgain, role);
-			Log log = (Log) pair.getSecond();
+			Log log;
+			if ("add".equals(op)) {
+				String newPassword = request.getParameter("newPassword");
+				String newPasswordAgain = request.getParameter("newPasswordAgain");
+				int role = Integer.parseInt(request.getParameter("role"));
+				//添加操作人
+				Pair pair = UserAccountManager.getInstance().addOperator(employee, enIdentity, enName, identity, username, 
+						password, newIdentity, newName, newPassword, newPasswordAgain, role);
+				log = (Log) pair.getSecond();
+			}
+			else {
+				Pair pair = UserAccountManager.getInstance().deleteOperator(employee, enIdentity, enName, identity, 
+												username, password, newIdentity, newName);
+				log = (Log) pair.getSecond();
+			}
 			request.setAttribute("log", log);
 			request.setAttribute("logTime", log.getFormatTime());
 		} catch (Exception e) {

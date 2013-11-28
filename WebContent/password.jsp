@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>存款</title>
+<title>修改密码</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/base.css" />
@@ -14,13 +14,14 @@
 	<jsp:include page="navbar.jsp" />
 	
 	<div class="container container-top">
-		<form class="form-data" action="Deposit.do" method="post">
-			<h2 class="form-data-heading">请输入存款信息</h2>
-			<input class="form-control" name="username" type="text" placeholder="账号" required autofocus />
-			<input class="form-control" name="password" type="password" placeholder="密码" required />
-			<input class="form-control" name="money" type="text" placeholder="存入金额" required />
+		<form class="form-data" action="ChangePassword.do" method="post">
+			<h2 class="form-data-heading">请输入用户信息</h2>
+			<input class="form-control" name="identity" type="text" placeholder="身份证" required autofocus />
+			<input class="form-control" name="username" type="text" placeholder="账号" required />
+			<input class="form-control" name="oldPassword" type="password" placeholder="旧密码" required />
+			<input class="form-control" name="newPassword" type="password" placeholder="新密码" required />
 			<label class="checkbox"></label>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">存款</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">修改密码</button>
 		</form>
 	</div>
 	

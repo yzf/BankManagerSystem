@@ -265,11 +265,17 @@ public class UserAccountManager {
 		return new Pair(userAccount.getAccount().getBalance(), log);
 	}
 	//增加企业账户操作人
-	public Pair addOperator(Employee employee, String identity, String username,  String password, String newIdentity, 
+	public Pair addOperator(Employee employee, String enIdentity, String enName,
+			String identity, String username,  String password, String newIdentity, 
 			String newName, String newPassword, String newPasswordAgain, int role) throws Exception {
 		UserAccount ua = userAccountDao.get(identity, username, password, true);
 		if (ua == null) {
 			throw new Exception(Message.Mismatching);//用户信息有误
+		}
+		EnterpriseAccount ea = enterpriseAccountDao.get(username);
+		if (! ea.getEnterprise().getIdentity().equals(enIdentity) ||
+				! ea.getEnterprise().getName().equals(enName)) {
+			throw new Exception(Message.Mismatching);//企业信息有误
 		}
 		if (! newPassword.equals(newPasswordAgain)) {
 			throw new Exception(Message.PasswordDiffer);//两次密码输入不同
@@ -289,6 +295,31 @@ public class UserAccountManager {
 		newUa = userAccountDao.add(newUa);
 		Log log = LogManager.getInstance().recordOperation(employee, ua, 
 						newUa, "创建" + (newUa.isSuper() ? "超级" : "普通") + "操作人");
+		return new Pair(null, log);
+	}
+	//删除企业账户操作人
+	public Pair deleteOperator(Employee employee, String enIdentity, String enName,
+			String identity, String username,  String password, String delIdentity, 
+			String delName) throws Exception {
+		UserAccount uaSuper = userAccountDao.get(identity, username, password, true);
+		if (uaSuper == null) {
+			throw new Exception(Message.Mismatching);//用户信息有误
+		}
+		EnterpriseAccount ea = enterpriseAccountDao.get(username);
+		if (! ea.getEnterprise().getIdentity().equals(enIdentity) ||
+				! ea.getEnterprise().getName().equals(enName)) {
+			throw new Exception(Message.Mismatching);//企业信息有误
+		}
+		UserAccount ua = userAccountDao.get(delIdentity, username, password, false);
+		if (ua == null) {
+			throw new Exception(Message.Mismatching);//要删除的操作人信息有误
+		}
+		if (ua.getRole() == UserAccount.Super) {
+			throw new Exception(Message.Unauthorized);//不允许删除超级操作人
+		}
+		userAccountDao.delete(ua);
+		Log log = LogManager.getInstance().recordOperation(employee, uaSuper, 
+				ua, "删除普通操作人");
 		return new Pair(null, log);
 	}
 }

@@ -89,4 +89,15 @@ public class EmployeeDaoSerial implements IEmployeeDao {
 		// TODO Auto-generated method stub
 		return (Employee) SerialDatabase.getInstance().add(employee);
 	}
+
+	@Override
+	public boolean delete(String name, String username) {
+		// TODO Auto-generated method stub
+		Employee e = get(username);
+		if (e != null && e.getName().equals(name)) {
+			SerialDatabase.getInstance().remove(e);
+			return true;
+		}
+		return false;
+	}
 }

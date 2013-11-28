@@ -63,10 +63,6 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
-    <url-pattern>/withdrawal.jsp</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>RoleFilter</filter-name>
     <url-pattern>/journal.jsp</url-pattern>
   </filter-mapping>
   <filter-mapping>
@@ -128,14 +124,6 @@
     <url-pattern>/Deposit.do</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>Withdrawal</servlet-name>
-    <servlet-class>info.yzf.service.controller.WithdrawalAction</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Withdrawal</servlet-name>
-    <url-pattern>/Withdrawal.do</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>Query</servlet-name>
     <servlet-class>info.yzf.service.controller.QueryAction</servlet-class>
   </servlet>
@@ -168,12 +156,12 @@
     <url-pattern>/CloseAccount.do</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>AddOperator</servlet-name>
-    <servlet-class>info.yzf.service.controller.AddOperatorAction</servlet-class>
+    <servlet-name>Operator</servlet-name>
+    <servlet-class>info.yzf.service.controller.OperatorAction</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AddOperator</servlet-name>
-    <url-pattern>/AddOperator.do</url-pattern>
+    <servlet-name>Operator</servlet-name>
+    <url-pattern>/Operator.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Admin</servlet-name>

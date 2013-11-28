@@ -45,4 +45,9 @@ public interface IEmployeeDao {
 	 * @return
 	 */
 	Employee add(Employee employee);
+	/**
+	 * 删除雇员
+	 * @param employee
+	 */
+	boolean delete(String name, String username);
 }

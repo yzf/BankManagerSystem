@@ -74,4 +74,10 @@ public class EmployeeManager {
 	public Vector<Department> getDepartments() {
 		return departmentDao.get();
 	}
+	
+	public void delete(String name, String username) throws Exception {
+		if (! employeeDao.delete(name, username)) {
+			throw new Exception(Message.Mismatching);
+		}
+	}
 }
