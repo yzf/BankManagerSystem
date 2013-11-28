@@ -33,15 +33,16 @@ public class QueryAction extends HttpServlet {
 		request.setAttribute("operation", "query");
 		request.setAttribute("message", Message.Success);
 		try {
+			int op = Integer.parseInt(request.getParameter("op"));
 			String identity = request.getParameter("identity").trim();
 			String username = request.getParameter("username").trim();
 			String password = request.getParameter("password");
-			String begin = request.getParameter("begin").trim();
-			String end = request.getParameter("end").trim();
+			String begin = request.getParameter("begin");
+			String end = request.getParameter("end");
 			
 			Employee employee = (Employee) request.getSession().getAttribute("employee");
 			
-			if (begin != "" && end != "") {
+			if (op == 1) {
 				Vector<Log> logs = LogManager.getInstance().query(identity, username, password, begin, end);
 				request.setAttribute("logs", logs);
 			}

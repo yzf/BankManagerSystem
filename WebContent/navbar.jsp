@@ -27,7 +27,7 @@
 						<li><a href="enterprise.jsp">企业通道</a></li>
 						<li><a href="journal.jsp">日志操作</a></li>
 						<c:if test="${employee != null && employee.type == 3}">
-						<li><a href="admin.jsp">管理</a></li>
+						<li><a href="admin.jsp">系统管理</a></li>
 						</c:if>
 					</ul>
 				</li>

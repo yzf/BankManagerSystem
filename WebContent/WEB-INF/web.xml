@@ -27,15 +27,11 @@
   </filter>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
-    <url-pattern>/changePassword.jsp</url-pattern>
+    <url-pattern>/password.jsp</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
-    <url-pattern>/closeAccount.jsp</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>RoleFilter</filter-name>
-    <url-pattern>/createAccount.jsp</url-pattern>
+    <url-pattern>/account.jsp</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
@@ -67,10 +63,6 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
-    <url-pattern>/setting.jsp</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>RoleFilter</filter-name>
     <url-pattern>/admin.jsp</url-pattern>
   </filter-mapping>
   
@@ -98,14 +90,6 @@
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout.do</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>VIP</servlet-name>
-    <servlet-class>info.yzf.service.controller.VIPAction</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>VIP</servlet-name>
-    <url-pattern>/VIP.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>CreateAccount</servlet-name>

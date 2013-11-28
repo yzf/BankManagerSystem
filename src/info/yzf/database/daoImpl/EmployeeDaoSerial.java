@@ -100,4 +100,27 @@ public class EmployeeDaoSerial implements IEmployeeDao {
 		}
 		return false;
 	}
+
+	@Override
+	public Employee updatePassword(String username, String password) {
+		// TODO Auto-generated method stub
+		Employee e = get(username);
+		if (e != null) {
+			e.setPassword(password);
+		}
+		return e;
+	}
+
+	@Override
+	public Employee updateInfo(String name, String username, int type,
+			Department d) {
+		// TODO Auto-generated method stub
+		Employee e = get(username);
+		if (e == null || ! e.getName().equals(name)) {
+			return null;
+		}
+		e.setType(type);
+		e.setDepartment(d);
+		return e;
+	}
 }

@@ -28,16 +28,30 @@ public class AdminAction extends HttpServlet {
 		request.setAttribute("message", Message.Success);
 		try {
 			String op = request.getParameter("op");
-			String name = request.getParameter("name");
-			String username = request.getParameter("username");
 			if ("add".equals(op)) {
+				String name = request.getParameter("name");
+				String username = request.getParameter("username");
 				String password = request.getParameter("password");
 				int type = Integer.parseInt(request.getParameter("type"));
 				int depId = Integer.parseInt(request.getParameter("depId"));
 				EmployeeManager.getInstance().add(name, username, password, type, depId);
 			}
-			else {
+			else if ("delete".equals(op)){
+				String name = request.getParameter("name");
+				String username = request.getParameter("username");
 				EmployeeManager.getInstance().delete(name, username);
+			}
+			else if ("update".equals(op)) {
+				String name = request.getParameter("name");
+				String username = request.getParameter("username");
+				int type = Integer.parseInt(request.getParameter("type"));
+				int depId = Integer.parseInt(request.getParameter("depId"));
+				EmployeeManager.getInstance().updateInfo(name, username, type, depId);
+			}
+			else if ("password".equals(op)) {
+				String username = request.getParameter("username");
+				String password = request.getParameter("password");
+				EmployeeManager.getInstance().updatePassword(username, password);
 			}
 		} catch(Exception e) {
 			request.setAttribute("message", e.getLocalizedMessage());

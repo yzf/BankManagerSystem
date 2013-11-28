@@ -53,14 +53,14 @@ public class EmployeeManager {
 	 */
 	public Pair add(String name, String username, String password, int type, int depId) throws Exception {
 		if (employeeDao.get(username) != null) {
-			throw new Exception(Message.UsernameExist);
+			throw new Exception(Message.UsernameExist);//账号已经存在
 		}
 		if (departmentDao.get(depId) == null) {
-			throw new Exception(Message.DepNotExist);
+			throw new Exception(Message.DepNotExist);//部门不存在
 		}
 		if (type != Employee.Conductor) {
 			if (type == Employee.Manager && departmentDao.hasManager(depId)) {
-				throw new Exception(Message.ManagerExist);
+				throw new Exception(Message.ManagerExist);//部门已经有经理
 			}
 			Employee e = new Employee(name, username, password, type, departmentDao.get(depId));
 			employeeDao.add(e);
@@ -78,6 +78,34 @@ public class EmployeeManager {
 	public void delete(String name, String username) throws Exception {
 		if (! employeeDao.delete(name, username)) {
 			throw new Exception(Message.Mismatching);
+		}
+	}
+	
+	public void updatePassword(String username, String password) throws Exception {
+		Employee e = employeeDao.updatePassword(username, password);
+		if (e == null) {
+			throw new Exception(Message.EmployeeNotExist);
+		}
+	}
+	
+	public void updateInfo(String name, String username, int type, int depId) throws Exception {
+		Department d = departmentDao.get(depId);
+		if (d == null) {
+			throw new Exception(Message.DepNotExist);
+		}
+		Employee e = employeeDao.get(username);
+		if (e == null) {
+			throw new Exception(Message.EmployeeNotExist);
+		}
+		if (type == Employee.Manager && departmentDao.hasManager(depId)) {
+			throw new Exception(Message.ManagerExist);//部门已经有经理
+		}
+		if (type == Employee.Conductor) {
+			d = null;
+		}
+		e = employeeDao.updateInfo(name, username, type, d);
+		if (e == null) {
+			throw new Exception(Message.Fail);
 		}
 	}
 }

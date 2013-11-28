@@ -50,4 +50,19 @@ public interface IEmployeeDao {
 	 * @param employee
 	 */
 	boolean delete(String name, String username);
+	/**
+	 * 修改密码
+	 * @param username
+	 * @param password
+	 */
+	Employee updatePassword(String username, String password);
+	/**
+	 * 修改雇员信息
+	 * @param name
+	 * @param username
+	 * @param type
+	 * @param d
+	 * @return
+	 */
+	Employee updateInfo(String name, String username, int type, Department d);
 }

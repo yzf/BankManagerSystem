@@ -17,7 +17,7 @@ public class Test {
 	 */
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		Timestamp time = new Timestamp(System.currentTimeMillis());
-		System.out.print(Util.formatDay(time));
+		Timestamp time = Util.getTomorrow("2013-11-28 17:55:10");
+		System.out.print(time);
 	}
 }

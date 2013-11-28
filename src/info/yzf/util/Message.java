@@ -3,6 +3,7 @@ package info.yzf.util;
 
 public class Message {	
 	public static final String Success = "操作成功";
+	public static final String Fail = "操作失败";
 	public static final String NumberFormat = "无效数据格式";
 	public static final String PasswordDiffer = "两次密码不同";
 	public static final String Mismatching = "用户信息不正确";
@@ -25,4 +26,5 @@ public class Message {
 	public static final String DepNotExist = "部门不存在";
 	public static final String ManagerExist = "该部门已经有经理";
 	public static final String DateFormat = "日期格式错误";
+	public static final String EmployeeNotExist = "雇员不存在";
 }

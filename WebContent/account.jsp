@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>开户</title>
+<title>开户销户</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="css/base.css" />
@@ -15,7 +15,7 @@
 	
 	<div class="container container-top">
 		<div class="row">
-			<div class="col-md-span3" style="">
+			<div class="col-md-span3">
 				<ul class="nav nav-list affix" style="width: 258px; top: 100px;">
 					<li class="list-item" value="0">
 						<a href="#">开户</a>
