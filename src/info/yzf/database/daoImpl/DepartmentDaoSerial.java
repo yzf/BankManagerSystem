@@ -57,4 +57,16 @@ public class DepartmentDaoSerial implements IDepartmentDao {
 		return false;
 	}
 
+	@Override
+	public Employee getManager(Department d) {
+		// TODO Auto-generated method stub
+		for (BaseModel bm : SerialDatabase.getInstance().get(Employee.class)) {
+			Employee e = (Employee) bm;
+			if (e.isManager() && e.getDepartment().equals(d)) {
+				return e;
+			}
+		}
+		return null;
+	}
+
 }

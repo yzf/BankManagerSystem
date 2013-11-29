@@ -92,7 +92,7 @@ public class UserAccountManager {
 			operation = "创建企业账户";
 		}
 		Log log = LogManager.getInstance().recordOperation(employee, userAccount, 
-								null, operation);
+								null, operation, Log.CreateAccount);
 		return new Pair(username, log);
 	}
 	//存款
@@ -111,9 +111,9 @@ public class UserAccountManager {
 		//存款操作
 		accountDao.updateBalance(account.getId(), account.getBalance() + money);
 		//日志记录
-		String operation = "存入:" + money + "元";
+		String operation = "存入：" + money + "元";
 		Log log = LogManager.getInstance().recordOperation(employee, userAccount, 
-						null, operation);
+						null, operation, Log.Deposit);
 		return new Pair(account.getBalance(), log);
 	}
 	//取款 
@@ -146,8 +146,8 @@ public class UserAccountManager {
 			}
 		}
 		account = accountDao.updateBalance(account.getId(), account.getBalance() - money);
-		String operation = "取出:" + money + "元" + (account.getBalance() < 0 ? " 账户处于透支状态" : "");
-		Log log = LogManager.getInstance().recordOperation(employee, userAccount, null, operation);
+		String operation = "取出：" + money + "元" + (account.getBalance() < 0 ? " 账户处于透支状态" : "");
+		Log log = LogManager.getInstance().recordOperation(employee, userAccount, null, operation, Log.Withdrawal);
 		return new Pair(account.getBalance(), log);
 	}
 	//查询
@@ -156,7 +156,7 @@ public class UserAccountManager {
 		if (ua == null) {
 			throw new Exception(Message.Mismatching);
 		}
-		Log log = LogManager.getInstance().recordOperation(employee, ua, null, "查询余额");
+		Log log = LogManager.getInstance().recordOperation(employee, ua, null, "查询余额", Log.Query);
 		return new Pair(ua.getAccount().getBalance(), log);
 	}
 	//转账
@@ -225,7 +225,7 @@ public class UserAccountManager {
 		toAccount = accountDao.updateBalance(toAccount.getId(), toAccount.getBalance() + money);
 		UserAccount ua = new UserAccount(fromUser, fromAccount);//用户插入日志
 		Log log = LogManager.getInstance().recordOperation(employee, ua, toUa, 
-				"转账:" + money + "元" + (fromAccount.getBalance() < 0 ? " 账户处于透支状态" : ""));
+				"转账：" + money + "元" + (fromAccount.getBalance() < 0 ? " 账户处于透支状态" : ""), Log.Transfer);
 		return new Pair(fromAccount.getBalance(), log);
 	}
 	//修改密码
@@ -240,7 +240,7 @@ public class UserAccountManager {
 		}
 		userAccountDao.updatePassword(userAccount.getId(), newPassword);
 		Log log = LogManager.getInstance().recordOperation(employee, userAccount,
-						null, "修改密码");
+						null, "修改密码", Log.Password);
 		return new Pair(null, log);
 	}
 	//销户
@@ -261,7 +261,7 @@ public class UserAccountManager {
 			EnterpriseAccount ea = enterpriseAccountDao.get(username);
 			enterpriseAccountDao.delete(ea);
 		}
-		Log log = LogManager.getInstance().recordOperation(employee, userAccount, null, "销户");
+		Log log = LogManager.getInstance().recordOperation(employee, userAccount, null, "销户", Log.CloseAccount);
 		return new Pair(userAccount.getAccount().getBalance(), log);
 	}
 	//增加企业账户操作人
@@ -294,7 +294,7 @@ public class UserAccountManager {
 		UserAccount newUa = new UserAccount(user, ua.getAccount(), newPassword, role);
 		newUa = userAccountDao.add(newUa);
 		Log log = LogManager.getInstance().recordOperation(employee, ua, 
-						newUa, "创建" + (newUa.isSuper() ? "超级" : "普通") + "操作人");
+						newUa, "创建" + (newUa.isSuper() ? "超级" : "普通") + "操作人", Log.Other);
 		return new Pair(null, log);
 	}
 	//删除企业账户操作人
@@ -319,7 +319,7 @@ public class UserAccountManager {
 		}
 		userAccountDao.delete(ua);
 		Log log = LogManager.getInstance().recordOperation(employee, uaSuper, 
-				ua, "删除普通操作人");
+				ua, "删除普通操作人", Log.Other);
 		return new Pair(null, log);
 	}
 }

@@ -1,10 +1,8 @@
 package info.yzf.service.controller;
 
 import info.yzf.database.model.Employee;
-import info.yzf.database.model.Log;
-import info.yzf.service.manager.UserAccountManager;
+import info.yzf.service.manager.EmployeeManager;
 import info.yzf.util.Message;
-import info.yzf.util.Pair;
 
 import java.io.IOException;
 
@@ -15,35 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class WithdrawalAction
+ * Servlet implementation class SummaryAction
  */
-@WebServlet("/WithdrawalAction")
-public class WithdrawalAction extends HttpServlet {
-       
-	private static final long serialVersionUID = 7318625370800902317L;
+@WebServlet("/SummaryAction")
+public class SummaryAction extends HttpServlet {
+	
+	private static final long serialVersionUID = 5655943993532297200L;
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		request.setAttribute("operation", "withdrawal");
+		request.setAttribute("operation", "summary");
 		request.setAttribute("message", Message.Success);
 		try {
 			//获取数据
-			String username = request.getParameter("username").trim();
-			String password = request.getParameter("password").trim();
-			double money = Double.parseDouble(request.getParameter("money"));
-			//取款
+			String content = request.getParameter("content");
 			Employee employee = (Employee) request.getSession().getAttribute("employee");
-			Pair pair = UserAccountManager.getInstance().withdrawal(employee, username, password, money);
-			Log log = (Log) pair.getSecond();
-			request.setAttribute("detail", "余额为：" + (double) pair.getFirst());
-			request.setAttribute("log", log);
-			request.setAttribute("logTime", log.getFormatTime());
+			EmployeeManager.getInstance().submitSummary(employee, content);
 		} catch (Exception e) {
-			e.printStackTrace();
 			request.setAttribute("message", e.getLocalizedMessage());
 		}
 		request.getRequestDispatcher("result.jsp").forward(request, response);

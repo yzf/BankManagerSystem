@@ -2,13 +2,17 @@ package info.yzf.service.manager;
 
 import info.yzf.database.dao.IDepartmentDao;
 import info.yzf.database.dao.IEmployeeDao;
+import info.yzf.database.dao.ISummaryDao;
 import info.yzf.database.daoImpl.DepartmentDaoSerial;
 import info.yzf.database.daoImpl.EmployeeDaoSerial;
+import info.yzf.database.daoImpl.SummaryDaoSerial;
 import info.yzf.database.model.Department;
 import info.yzf.database.model.Employee;
+import info.yzf.database.model.Summary;
 import info.yzf.util.Message;
 import info.yzf.util.Pair;
 
+import java.sql.Timestamp;
 import java.util.Vector;
 
 /**
@@ -20,10 +24,12 @@ public class EmployeeManager {
 	
 	private IEmployeeDao employeeDao;
 	private IDepartmentDao departmentDao;
+	private ISummaryDao summaryDao;
 	
 	private EmployeeManager() {
 		employeeDao = new EmployeeDaoSerial();
 		departmentDao = new DepartmentDaoSerial();
+		summaryDao = new SummaryDaoSerial();
 	}
 
 	private static class InstanceHolder {
@@ -107,5 +113,11 @@ public class EmployeeManager {
 		if (e == null) {
 			throw new Exception(Message.Fail);
 		}
+	}
+	
+	public void submitSummary(Employee employee, String content) throws Exception {
+		Summary s = new Summary(new Timestamp(System.currentTimeMillis()),
+					employee, content);
+		summaryDao.add(s);
 	}
 }

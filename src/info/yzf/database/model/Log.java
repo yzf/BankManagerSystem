@@ -12,12 +12,23 @@ import java.sql.Timestamp;
 public class Log extends BaseModel implements Serializable, Comparable<Log> {
 
 	private static final long serialVersionUID = -1438126000696131556L;
+
+	public static String CreateAccount = "开户";
+	public static String Deposit = "存款";
+	public static String Withdrawal = "取款";
+	public static String Query = "查询";
+	public static String Transfer = "转账";
+	public static String Password = "修改密码";
+	public static String CloseAccount = "销户";
+	public static String Other = "其他";
 	
 	private Timestamp time;//时间
 	private Employee employee;//雇员
 	private UserAccount top;//攻方
 	private UserAccount bottom;//受方
 	private String operation;//详细操作
+	private String type;
+	
 	
 	@Override
 	public String toString() {
@@ -47,13 +58,14 @@ public class Log extends BaseModel implements Serializable, Comparable<Log> {
 	}
 
 	public Log(Timestamp time, Employee employee, UserAccount top,
-			UserAccount bottom, String operation) throws Exception {
+			UserAccount bottom, String operation, String type) throws Exception {
 		super();
 		this.time = time;
 		this.employee = employee.clone();
 		this.top = top.clone();
 		this.bottom = (bottom != null ? bottom.clone() : null);
 		this.operation = operation;
+		this.type = type;
 	}
 
 	public Timestamp getTime() {
@@ -94,5 +106,13 @@ public class Log extends BaseModel implements Serializable, Comparable<Log> {
 
 	public void setOperation(String operation) {
 		this.operation = operation;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

@@ -1,20 +1,26 @@
 package info.yzf.service.manager;
 
 import info.yzf.database.dao.IDepartmentDao;
+import info.yzf.database.dao.IEmployeeDao;
 import info.yzf.database.dao.ILogDao;
+import info.yzf.database.dao.ISummaryDao;
 import info.yzf.database.dao.IUserAccountDao;
 import info.yzf.database.daoImpl.DepartmentDaoSerial;
+import info.yzf.database.daoImpl.EmployeeDaoSerial;
 import info.yzf.database.daoImpl.LogDaoSerial;
+import info.yzf.database.daoImpl.SummaryDaoSerial;
 import info.yzf.database.daoImpl.UserAccountDaoSerial;
 import info.yzf.database.model.Department;
 import info.yzf.database.model.Employee;
 import info.yzf.database.model.Log;
+import info.yzf.database.model.Summary;
 import info.yzf.database.model.UserAccount;
 import info.yzf.util.Message;
-import info.yzf.util.Pair;
+import info.yzf.util.Report;
 import info.yzf.util.Util;
 
 import java.sql.Timestamp;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -27,11 +33,15 @@ public class LogManager {
 	private ILogDao logDao;
 	private IUserAccountDao customerAccountDao;
 	private IDepartmentDao departentDao;
+	private ISummaryDao summaryDao;
+	private IEmployeeDao employeeDao;
 	
 	private LogManager() {
 		logDao = new LogDaoSerial();
 		customerAccountDao = new UserAccountDaoSerial();
 		departentDao = new DepartmentDaoSerial();
+		summaryDao = new SummaryDaoSerial();
+		employeeDao = new EmployeeDaoSerial();
 	}
 	
 	private static class InstanceHolder {
@@ -52,9 +62,9 @@ public class LogManager {
 	 * @throws Exception 
 	 */
 	public Log recordOperation(Employee employee, UserAccount top,
-			UserAccount bottom, String operation) throws Exception {
+			UserAccount bottom, String operation, String type) throws Exception {
 		Log log = new Log(new Timestamp(System.currentTimeMillis()), 
-						employee, top, bottom, operation);
+						employee, top, bottom, operation, type);
 		try {
 			log = logDao.add(log);
 		} catch (Exception e) {
@@ -71,97 +81,43 @@ public class LogManager {
 	 */
 	public Vector<Log> query(String identity, String username, String password, String begin, String end) throws Exception {
 		Timestamp beginTime = Util.getToday(begin);
-		Timestamp endTime = Util.getTomorrow(end);
+		Timestamp endTime = Util.getDayAfterDays(end, 1);
 		UserAccount ca = customerAccountDao.get(identity, username, password, true);
 		if (ca == null) {
 			throw new Exception(Message.Mismatching);
 		}
 		return logDao.get(ca.getAccount(), beginTime, endTime);
 	}
-	/**
-	 * 雇员查看日志
-	 * @param level
-	 * @param depId
-	 * @param type
-	 * @param time
-	 * @return
-	 * @throws Exception 
-	 */
-	public Pair getJournal(Employee employee, int level, int depId, int type, String time) throws Exception {
-//		Department d = departentDao.get(depId);
-//		if (d == null) {
-//			throw new Exception(Message.DepNotExist);
-//		}
-//		String begin, end;
-//		Timestamp beginTime;
-//		Timestamp endTime;
-//		Vector<Log> logs;
-//		if (type == 0) {//日报
-//			begin = time + " 00:00:00";
-//			end = time + " 23:59:59";
-//		}
-//		else if (type == 1) {//月报
-//			int nMonth = Integer.parseInt(time.split("-")[1]);
-//			int nYear = Integer.parseInt(time.split("-")[0]);
-//			begin = time.split("-")[0] + "-";
-//			if (nMonth < 10) {
-//				begin += "0";
-//			}
-//			begin += String.valueOf(nMonth) + "-01 00:00:00";
-//			if (nMonth == 12) {
-//				end = String.valueOf(nYear) + "-01-01 00:00:00";
-//			}
-//			else {
-//				end = time.split("-")[0] + "-";
-//				if (nMonth < 9) {
-//					end += "0";
-//				}
-//				end += String.valueOf(nMonth + 1) + "-01 00:00:00";
-//			}
-//		}
-//		else if (type == 2) {//季度
-//			int jidu = Integer.parseInt(time.split(" ")[1]);
-//			if (jidu > 4 || jidu < 1) {
-//				throw new Exception(Message.DateFormat);
-//			}
-//			if (jidu == 1) {
-//				begin = time.split(" ")[0] + "-01-01 00:00:00";
-//				end = time.split(" ")[0] + "-04-01 00:00:00";
-//			}
-//			else if (jidu == 2) {
-//				begin = time.split(" ")[0] + "-04-01 00:00:00";
-//				end = time.split(" ")[0] + "-07-01 00:00:00";
-//			}
-//			else if (jidu == 3) {
-//				begin = time.split(" ")[0] + "-07-01 00:00:00";
-//				end = time.split(" ")[0] + "-10-01 00:00:00";
-//			}
-//			else {
-//				begin = time.split(" ")[0] + "-10-01 00:00:00";
-//				end = time.split(" ")[0] + "-12-31 23:59:59";
-//			}
-//		}
-//		else {//年报
-//			begin = time + "-01-01 00:00:00";
-//			end = String.valueOf(Integer.parseInt(time) + 1) + "-01-01 00:00:00";
-//		}
-//
-//		try {
-//			beginTime = Util.convertToTimestamp(begin);
-//			endTime = Util.convertToTimestamp(end);
-//		} catch (Exception e) {
-//			throw new Exception(Message.TimeFormat);
-//		}
-//		if (level <= 0) {//个人
-//			logs = logDao.get(employee, beginTime, endTime);
-//		}
-//		else if (level <= 1) {
-//			logs = logDao.get(d, beginTime, endTime);
-//		}
-//		else {
-//			logs = logDao.get(beginTime, endTime);
-//		}
-		
-		return new Pair(null, null);
+	
+	public Report getPersonalReport(String username, Timestamp begin, Timestamp end) {
+		Employee e = employeeDao.get(username);
+		Vector<Summary> summary = summaryDao.get(e, begin, end);
+		Vector<Log> log = logDao.get(e, begin, end);
+		Map<String, Integer> statistics = Util.countLogType(log);
+		return new Report(Report.One, e, null, statistics, summary, log);
+	}
+	
+	public Report getDepReport(Employee e, int depId, Timestamp begin, Timestamp end) throws Exception {
+		Department d = departentDao.get(depId);
+		if (d == null) {
+			throw new Exception(Message.DepNotExist);
+		}
+		Employee manager = departentDao.getManager(d);
+		Vector<Employee> subordinate = employeeDao.getSubordinates(d);
+		Vector<Summary> summary = summaryDao.get(d, begin, end);
+		Vector<Log> log = logDao.get(d, begin, end);
+		Map<String, Integer> statistics = Util.countLogType(log);
+		return new Report(Report.Dep, manager, subordinate, statistics, summary, log);
+	}
+	
+	public Report getBankReport(Employee e, Timestamp begin, Timestamp end) throws Exception {
+		if (e.getType() < Employee.Conductor) {
+			throw new Exception(Message.Unauthorized);
+		}
+		Vector<Employee> subordinate = employeeDao.gets();
+		Vector<Summary> summary = summaryDao.get(begin, end);
+		Vector<Log> log = logDao.get(begin, end);
+		Map<String, Integer> statistics = Util.countLogType(log);
+		return new Report(Report.All, e, subordinate, statistics, summary, log);
 	}
 }

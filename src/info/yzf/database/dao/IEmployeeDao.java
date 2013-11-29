@@ -3,7 +3,6 @@ package info.yzf.database.dao;
 import info.yzf.database.model.Department;
 import info.yzf.database.model.Employee;
 
-import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -32,11 +31,11 @@ public interface IEmployeeDao {
 	 */
 	Employee get(String username, String password);
 	/**
-	 * 获取雇员的所有下属
+	 * 获取所有部门成员
 	 * @param employee
 	 * @return
 	 */
-	Vector<Map<Department, Vector<Employee>>> getSubordinates(Employee employee);
+	Vector<Employee> getSubordinates(Department department);
 	/**
 	 * 添加雇员
 	 * @param boss 雇员上司
@@ -65,4 +64,9 @@ public interface IEmployeeDao {
 	 * @return
 	 */
 	Employee updateInfo(String name, String username, int type, Department d);
+	/**
+	 * 获取所有员工
+	 * @return
+	 */
+	Vector<Employee> gets();
 }

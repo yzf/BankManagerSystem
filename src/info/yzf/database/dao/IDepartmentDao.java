@@ -1,6 +1,7 @@
 package info.yzf.database.dao;
 
 import info.yzf.database.model.Department;
+import info.yzf.database.model.Employee;
 
 import java.util.Vector;
 
@@ -28,4 +29,10 @@ public interface IDepartmentDao {
 	 * @return
 	 */
 	boolean hasManager(int depId);
+	/**
+	 * 获取部门经理
+	 * @param d
+	 * @return
+	 */
+	Employee getManager(Department d);
 }

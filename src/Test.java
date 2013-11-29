@@ -17,7 +17,7 @@ public class Test {
 	 */
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		Timestamp time = Util.getTomorrow("2013-11-28 17:55:10");
-		System.out.print(time);
+		Timestamp time = Util.getDayAfterMonths("2013-10-31 17:55:10", 1);
+		System.out.print(Util.formatTime(time));
 	}
 }

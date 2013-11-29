@@ -6,6 +6,7 @@ import info.yzf.database.model.Department;
 import info.yzf.database.model.Employee;
 import info.yzf.database.model.EnterpriseAccount;
 import info.yzf.database.model.Log;
+import info.yzf.database.model.Summary;
 import info.yzf.database.model.User;
 import info.yzf.database.model.UserAccount;
 import info.yzf.util.Util;
@@ -26,7 +27,7 @@ import java.util.Vector;
 public class SerialDatabase {
 	
 	private static final String DB_FILE = "database.data";
-	private static final int USERNAME_LEN = 19;
+	private static final int USERNAME_LEN = 12;
 	
 	private Map<Class<?>, Vector<BaseModel>> map;
 	
@@ -80,13 +81,14 @@ public class SerialDatabase {
 		map.put(Employee.class, new Vector<BaseModel>());
 		map.put(Log.class, new Vector<BaseModel>());
 		map.put(Department.class, new Vector<BaseModel>());
+		map.put(Summary.class, new Vector<BaseModel>());
 		//添加初始账号
 		Department d = new Department("业务部门");
 		Department dd = new Department("财政部门");
 		Employee admin = new Employee("系统管理员", "admin", "admin", Employee.Admin, null);	
-		Employee e3 = new Employee("女王大人", "zhou", "1", Employee.Conductor, null);
-		Employee e2 = new Employee("袁同学", "yuan", "1", Employee.Manager, d);	
-		Employee e1 = new Employee("霍同学", "huo", "1", Employee.Operator, d);
+		Employee e3 = new Employee("嘉嘉", "jiajia", "1", Employee.Conductor, null);
+		Employee e2 = new Employee("疯疯", "yuan", "1", Employee.Manager, d);	
+		Employee e1 = new Employee("吖霍", "huo", "1", Employee.Operator, d);
 		
 		add(admin);
 		add(e3);

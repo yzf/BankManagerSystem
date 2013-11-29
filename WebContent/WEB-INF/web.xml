@@ -21,21 +21,18 @@
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <!-- 身份过滤器 -->
   <filter>
     <filter-name>RoleFilter</filter-name>
     <filter-class>info.yzf.service.RoleFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
-    <url-pattern>/password.jsp</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>RoleFilter</filter-name>
     <url-pattern>/account.jsp</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
-    <url-pattern>/deposit.jsp</url-pattern>
+    <url-pattern>/admin.jsp</url-pattern>
   </filter-mapping>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
@@ -45,6 +42,18 @@
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/home.jsp</url-pattern>
   </filter-mapping>
+  <filter-mapping>
+    <filter-name>RoleFilter</filter-name>
+    <url-pattern>/journal.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>RoleFilter</filter-name>
+    <url-pattern>/money.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>RoleFilter</filter-name>
+    <url-pattern>/password.jsp</url-pattern>
+  </filter-mapping> 
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/query.jsp</url-pattern>
@@ -57,16 +66,12 @@
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/transfer.jsp</url-pattern>
   </filter-mapping>
-  <filter-mapping>
-    <filter-name>RoleFilter</filter-name>
-    <url-pattern>/journal.jsp</url-pattern>
-  </filter-mapping>
+  
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/admin.jsp</url-pattern>
   </filter-mapping>
-  
-  
+  <!-- Servlet的配置 -->
   <servlet>
     <servlet-name>SerialDB</servlet-name>
     <servlet-class>info.yzf.service.controller.SerialDBAction</servlet-class>
@@ -106,6 +111,14 @@
   <servlet-mapping>
     <servlet-name>Deposit</servlet-name>
     <url-pattern>/Deposit.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Withdrawal</servlet-name>
+    <servlet-class>info.yzf.service.controller.WithdrawalAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Withdrawal</servlet-name>
+    <url-pattern>/Withdrawal.do</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Query</servlet-name>
@@ -156,11 +169,19 @@
     <url-pattern>/Admin.do</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>Log</servlet-name>
-    <servlet-class>info.yzf.service.controller.LogAction</servlet-class>
+    <servlet-name>Report</servlet-name>
+    <servlet-class>info.yzf.service.controller.ReportAction</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Log</servlet-name>
-    <url-pattern>/Log.do</url-pattern>
+    <servlet-name>Report</servlet-name>
+    <url-pattern>/Report.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Summary</servlet-name>
+    <servlet-class>info.yzf.service.controller.SummaryAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Summary</servlet-name>
+    <url-pattern>/Summary.do</url-pattern>
   </servlet-mapping>
 </web-app>

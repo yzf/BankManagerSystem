@@ -6,8 +6,6 @@ import info.yzf.database.model.BaseModel;
 import info.yzf.database.model.Department;
 import info.yzf.database.model.Employee;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 public class EmployeeDaoSerial implements IEmployeeDao {
@@ -50,35 +48,16 @@ public class EmployeeDaoSerial implements IEmployeeDao {
 	}
 	
 	@Override
-	public Vector<Map<Department, Vector<Employee>>> getSubordinates(Employee employee) {
+	public Vector<Employee> getSubordinates(Department department) {
 		// TODO Auto-generated method stub
-		Vector<Map<Department, Vector<Employee>>> ret = new Vector<Map<Department, Vector<Employee>>>();
-		if (employee.getType() == Employee.Manager) {
-			Map<Department, Vector<Employee>> depEmp = new HashMap<Department, Vector<Employee>>();
-			Department d = employee.getDepartment();
-			Vector<Employee> employees = new Vector<Employee>();
-			for (BaseModel bm : SerialDatabase.getInstance().get(Employee.class)) {
-				Employee e = (Employee) bm;
-				if (e.getDepartment().equals(d)) {
-					employees.add(e);
-				}
+		Vector<Employee> ret = new Vector<Employee>();
+		for (BaseModel bm : SerialDatabase.getInstance().get(Employee.class)) {
+			Employee e = (Employee) bm;
+			if (e.getDepartment() == null) {
+				continue;
 			}
-			depEmp.put(d, employees);
-			ret.add(depEmp);
-		}
-		if (employee.getType() == Employee.Conductor) {
-			for (BaseModel bm : SerialDatabase.getInstance().get(Department.class)) {
-				Department d = (Department) bm;
-				Map<Department, Vector<Employee>> depEmp = new HashMap<Department, Vector<Employee>>();
-				Vector<Employee> employees = new Vector<Employee>();
-				for (BaseModel bm2 : SerialDatabase.getInstance().get(Employee.class)) {
-					Employee e = (Employee) bm2;
-					if (e.getDepartment().equals(d)) {
-						employees.add(e);
-					}
-				}
-				depEmp.put(d, employees);
-				ret.add(depEmp);
+			if (department.equals(e.getDepartment())) {
+				ret.add(e);
 			}
 		}
 		return ret;
@@ -122,5 +101,18 @@ public class EmployeeDaoSerial implements IEmployeeDao {
 		e.setType(type);
 		e.setDepartment(d);
 		return e;
+	}
+
+	@Override
+	public Vector<Employee> gets() {
+		// TODO Auto-generated method stub
+		Vector<Employee> ret = new Vector<Employee>();
+		for (BaseModel bm : SerialDatabase.getInstance().get(Employee.class)) {
+			if (((Employee)bm).getType() == Employee.Admin) {
+				continue;
+			}
+			ret.add((Employee) bm);
+		}
+		return ret;
 	}
 }

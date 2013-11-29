@@ -37,10 +37,10 @@
 					</li>
 					<%if (employee.getType() > 0) { %>
 					<li class="list-item" value="1">
-						<a href="#">个人日志报表</a>
+						<a href="#">员工日志报表</a>
 					</li>
 					<%} %>
-					<%if (employee.getType() > 1) { %>
+					<%if (employee.getType() > 0) { %>
 					<li class="list-item" value="2">
 						<a href="#">部门日志报表</a>
 					</li>
@@ -50,11 +50,14 @@
 						<a href="#">银行日志报表</a>
 					</li>
 					<%} %>
+					<li class="list-item" value="4">
+						<a href="#">填写总结报告</a>
+					</li>
 				</ul>
 			</div>
 		</div>
-		<div>
-			<form class="form-data journal-form" action="Log.do" method="post">
+		<div id="journal">
+			<form class="form-data journal-form" action="Report.do" method="post" target="_blank">
 				<h2 class="form-data-heading">我的日志报表</h2>
 				<input type="hidden" name="op" value="0" />
 				<div id="one">
@@ -110,16 +113,16 @@
 					<input type="hidden" id="dtp_input2" name="time" value="" required /><br/>
 					<div class="radio-margin text-center">季度：
 						<label class="radio-inline">
-							<input name="quarter" value="0" type="radio" checked="checked" />一
+							<input name="quarter" value="1" type="radio" checked="checked" />一
 						</label>
 						<label class="radio-inline">
-							<input name="quarter" value="1" type="radio"/>二
+							<input name="quarter" value="2" type="radio"/>二
 						</label>
 						<label class="radio-inline">
-							<input name="quarter" value="2" type="radio"/>三
+							<input name="quarter" value="3" type="radio"/>三
 						</label>
 						<label class="radio-inline">
-							<input name="quarter" value="3" type="radio"/>四
+							<input name="quarter" value="4" type="radio"/>四
 						</label>
 					</div>
 				</div>
@@ -133,6 +136,14 @@
 					<input type="hidden" id="dtp_input3" name="time" value="" required /><br/>
 				</div>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">查看</button>
+			</form>        
+		</div>
+		<div id="summary">
+			<form class="form-data journal-form" action="Summary.do" method="post">
+				<h2 class="form-data-heading">总结报告</h2>
+				<textarea name="content" rows="5" cols="50"></textarea>
+				<label class="checkbox"></label>
+				<button class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
 			</form>
 		</div>
 	</div>
@@ -146,27 +157,35 @@
 	var bindEvents = function () {
 		$("#dep").hide();
 		$("#one").hide();
+		$("#summary").hide();
 		$(".list-item").click(function () {
 			var val = $(this).val();
+			$("input[name='op']").val(val);
+			$("#journal").show();
+			$("#summary").hide();
 			if (val == 0) {
-				$("h2").html("我的日志报表");
+				$("#journal h2").html("我的日志报表");
 				$("#dep").hide();
 				$("#one").hide();
 			}
 			if (val == 1) {
-				$("h2").html("个人日志报表");
+				$("#journal h2").html("员工日志报表");
 				$("#dep").hide();
 				$("#one").show();
 			}
 			if (val == 2) {
-				$("h2").html("部门日志报表");
+				$("#journal h2").html("部门日志报表");
 				$("#dep").show();
 				$("#one").hide();
 			}
 			if (val == 3){
-				$("h2").html("银行日志报表");
+				$("#journal h2").html("银行日志报表");
 				$("#dep").hide();
 				$("#one").hide();
+			}
+			if (val == 4) {
+				$("#journal").hide();
+				$("#summary").show();
 			}
 		});
 		$(".time-input input").attr("disabled", "disabled");
@@ -188,7 +207,8 @@
 			todayHighlight: 1,
 			startView: 2,
 			minView: 2,
-			forceParse: 0
+			forceParse: 0,
+			todayBtn: false
 	    });
 		$(".form_month").datetimepicker( {
 			language:  'zh-CN',
