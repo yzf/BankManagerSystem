@@ -5,11 +5,11 @@ import info.yzf.database.dao.IEmployeeDao;
 import info.yzf.database.dao.ILogDao;
 import info.yzf.database.dao.ISummaryDao;
 import info.yzf.database.dao.IUserAccountDao;
-import info.yzf.database.daoImpl.DepartmentDaoSerial;
-import info.yzf.database.daoImpl.EmployeeDaoSerial;
-import info.yzf.database.daoImpl.LogDaoSerial;
-import info.yzf.database.daoImpl.SummaryDaoSerial;
-import info.yzf.database.daoImpl.UserAccountDaoSerial;
+import info.yzf.database.daoImpl.DepartmentDao;
+import info.yzf.database.daoImpl.EmployeeDao;
+import info.yzf.database.daoImpl.LogDao;
+import info.yzf.database.daoImpl.SummaryDao;
+import info.yzf.database.daoImpl.UserAccountDao;
 import info.yzf.database.model.Department;
 import info.yzf.database.model.Employee;
 import info.yzf.database.model.Log;
@@ -37,11 +37,16 @@ public class LogManager {
 	private IEmployeeDao employeeDao;
 	
 	private LogManager() {
-		logDao = new LogDaoSerial();
-		customerAccountDao = new UserAccountDaoSerial();
-		departentDao = new DepartmentDaoSerial();
-		summaryDao = new SummaryDaoSerial();
-		employeeDao = new EmployeeDaoSerial();
+//		logDao = new LogDaoSerial();
+//		customerAccountDao = new UserAccountDaoSerial();
+//		departentDao = new DepartmentDaoSerial();
+//		summaryDao = new SummaryDaoSerial();
+//		employeeDao = new EmployeeDaoSerial();
+		logDao = new LogDao();
+		customerAccountDao = new UserAccountDao();
+		departentDao = new DepartmentDao();
+		summaryDao = new SummaryDao();
+		employeeDao = new EmployeeDao();
 	}
 	
 	private static class InstanceHolder {

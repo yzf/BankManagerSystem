@@ -12,6 +12,18 @@ import java.sql.Timestamp;
 import java.util.Vector;
 
 public class LogDaoSerial implements ILogDao {
+	
+	@Override
+	public Log get(int id) {
+		// TODO Auto-generated method stub
+		for (BaseModel bm : SerialDatabase.getInstance().get(Log.class)) {
+			Log log = (Log) bm;
+			if (log.getId() == id) {
+				return log;
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public Log add(Log log) {
@@ -77,5 +89,4 @@ public class LogDaoSerial implements ILogDao {
 		}
 		return logList;
 	}
-
 }

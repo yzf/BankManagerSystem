@@ -3,9 +3,9 @@ package info.yzf.service.manager;
 import info.yzf.database.dao.IDepartmentDao;
 import info.yzf.database.dao.IEmployeeDao;
 import info.yzf.database.dao.ISummaryDao;
-import info.yzf.database.daoImpl.DepartmentDaoSerial;
-import info.yzf.database.daoImpl.EmployeeDaoSerial;
-import info.yzf.database.daoImpl.SummaryDaoSerial;
+import info.yzf.database.daoImpl.DepartmentDao;
+import info.yzf.database.daoImpl.EmployeeDao;
+import info.yzf.database.daoImpl.SummaryDao;
 import info.yzf.database.model.Department;
 import info.yzf.database.model.Employee;
 import info.yzf.database.model.Summary;
@@ -27,9 +27,12 @@ public class EmployeeManager {
 	private ISummaryDao summaryDao;
 	
 	private EmployeeManager() {
-		employeeDao = new EmployeeDaoSerial();
-		departmentDao = new DepartmentDaoSerial();
-		summaryDao = new SummaryDaoSerial();
+//		employeeDao = new EmployeeDaoSerial();
+//		departmentDao = new DepartmentDaoSerial();
+//		summaryDao = new SummaryDaoSerial();
+		employeeDao = new EmployeeDao();
+		departmentDao = new DepartmentDao();
+		summaryDao = new SummaryDao();
 	}
 
 	private static class InstanceHolder {

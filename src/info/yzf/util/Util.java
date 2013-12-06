@@ -15,6 +15,8 @@ import java.util.Vector;
 
 public class Util {
 	
+	private Util() {}
+	
 	private static final String str = "0123456789";
 	private static final Random random = new Random();
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

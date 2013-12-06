@@ -4,10 +4,10 @@ import info.yzf.database.dao.IAccountDao;
 import info.yzf.database.dao.IEnterpriseAccountDao;
 import info.yzf.database.dao.IUserAccountDao;
 import info.yzf.database.dao.IUserDao;
-import info.yzf.database.daoImpl.AccountDaoSerial;
-import info.yzf.database.daoImpl.EnterpriseAccountDaoSerial;
-import info.yzf.database.daoImpl.UserAccountDaoSerial;
-import info.yzf.database.daoImpl.UserDaoSerial;
+import info.yzf.database.daoImpl.AccountDao;
+import info.yzf.database.daoImpl.EnterpriseAccountDao;
+import info.yzf.database.daoImpl.UserAccountDao;
+import info.yzf.database.daoImpl.UserDao;
 import info.yzf.database.model.Account;
 import info.yzf.database.model.Employee;
 import info.yzf.database.model.EnterpriseAccount;
@@ -36,10 +36,14 @@ public class UserAccountManager {
 	private IEnterpriseAccountDao enterpriseAccountDao;
 	
 	private UserAccountManager() {
-		userDao = new UserDaoSerial();
-		accountDao = new AccountDaoSerial();
-		userAccountDao = new UserAccountDaoSerial();
-		enterpriseAccountDao = new EnterpriseAccountDaoSerial();
+//		userDao = new UserDaoSerial();
+//		accountDao = new AccountDaoSerial();
+//		userAccountDao = new UserAccountDaoSerial();
+//		enterpriseAccountDao = new EnterpriseAccountDaoSerial();
+		userDao = new UserDao();
+		accountDao = new AccountDao();
+		userAccountDao = new UserAccountDao();
+		enterpriseAccountDao = new EnterpriseAccountDao();
 	}
 	
 	private static class InstanceHolder {
@@ -109,7 +113,7 @@ public class UserAccountManager {
 			throw new Exception(Message.AccountFreezed);
 		}
 		//存款操作
-		accountDao.updateBalance(account.getId(), account.getBalance() + money);
+		account = accountDao.updateBalance(account.getId(), account.getBalance() + money);
 		//日志记录
 		String operation = "存入：" + money + "元";
 		Log log = LogManager.getInstance().recordOperation(employee, userAccount, 
@@ -238,7 +242,7 @@ public class UserAccountManager {
 		if (userAccount.getAccount().isEnterprise()) {
 			throw new Exception(Message.Unauthorized);
 		}
-		userAccountDao.updatePassword(userAccount.getId(), newPassword);
+		userAccount = userAccountDao.updatePassword(userAccount.getId(), newPassword);
 		Log log = LogManager.getInstance().recordOperation(employee, userAccount,
 						null, "修改密码", Log.Password);
 		return new Pair(null, log);

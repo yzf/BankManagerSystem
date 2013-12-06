@@ -9,6 +9,12 @@ import java.util.Vector;
 
 public interface ISummaryDao {
 	/**
+	 * 通过id获取报告
+	 * @param id
+	 * @return
+	 */
+	Summary get(int id);
+	/**
 	 * 添加报告
 	 * @param summary
 	 * @return

@@ -68,4 +68,16 @@ public class SummaryDaoSerial implements ISummaryDao {
 		return ret;
 	}
 
+	@Override
+	public Summary get(int id) {
+		// TODO Auto-generated method stub
+		for (BaseModel bm : SerialDatabase.getInstance().get(Summary.class)) {
+			Summary s = (Summary) bm;
+			if (s.getId() == id) {
+				return s;
+			}
+		}
+		return null;
+	}
+
 }

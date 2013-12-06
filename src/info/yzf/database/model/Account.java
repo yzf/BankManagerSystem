@@ -21,7 +21,7 @@ public class Account extends BaseModel implements Serializable, Cloneable {
 	
 	private String username;
 	private int aType;//账户类型  0活期 1定期
-	private int uType;//帐户类型  0普通 1VIP 2企业
+	private int uType;//用户类型  0普通 1VIP 2企业
 	private double balance;//金额
 	private boolean freezed;//是否被冻结
 

@@ -11,6 +11,10 @@ public class Summary extends BaseModel implements Serializable {
 	private Employee employee;
 	private String content;
 	
+	public Summary() {
+		
+	}
+	
 	public Summary(Timestamp time, Employee employee, String content) throws CloneNotSupportedException {
 		super();
 		this.time = time;

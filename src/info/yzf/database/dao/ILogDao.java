@@ -15,6 +15,12 @@ import java.util.Vector;
  */
 public interface ILogDao {
 	/**
+	 * 通过id获取日志
+	 * @param id
+	 * @return
+	 */
+	Log get(int id);
+	/**
 	 * 添加日志条目
 	 * @param log
 	 * @return
