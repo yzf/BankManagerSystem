@@ -2,6 +2,8 @@ package info.yzf.database.dao;
 
 import info.yzf.database.model.Account;
 
+import java.util.Vector;
+
 public interface IAccountDao {
 	/**
 	 * 生成账号
@@ -38,4 +40,14 @@ public interface IAccountDao {
 	 * @param account
 	 */
 	void delete(Account account);
+	/**
+	 * 获取所有帐户
+	 * @return
+	 */
+	Vector<Account> get();
+	/**
+	 * 冻结账户
+	 * @return
+	 */
+	Account changeStatus(int id, boolean isFreezed);
 }

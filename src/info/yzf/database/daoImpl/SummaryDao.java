@@ -102,7 +102,7 @@ public class SummaryDao implements ISummaryDao {
 			ps.setTimestamp(2, begin);
 			ps.setTimestamp(3, end);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				ret.add(generate(rs));
 			}
 			con.close();
@@ -124,7 +124,7 @@ public class SummaryDao implements ISummaryDao {
 			ps.setTimestamp(2, begin);
 			ps.setTimestamp(3, end);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				ret.add(generate(rs));
 			}
 			con.close();
@@ -145,7 +145,7 @@ public class SummaryDao implements ISummaryDao {
 			ps.setTimestamp(1, begin);
 			ps.setTimestamp(2, end);
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				ret.add(generate(rs));
 			}
 			con.close();

@@ -1,6 +1,9 @@
 package info.yzf.service;
 
 import info.yzf.database.SerialDatabase;
+import info.yzf.database.dao.IAccountDao;
+import info.yzf.database.daoImpl.AccountDao;
+import info.yzf.database.daoImpl.AccountDaoSerial;
 import info.yzf.database.model.Account;
 import info.yzf.database.model.BaseModel;
 
@@ -17,6 +20,8 @@ public class BankTask {
 	private final long task1Delay = 0;
 	private final long task2Delay = 5000;
 	private final long day = 3600 * 24 * 1000;
+//	private IAccountDao accountDao = new AccountDaoSerial();
+	private IAccountDao accountDao = new AccountDao();
 	
 	private BankTask() {}
 	
@@ -40,8 +45,7 @@ public class BankTask {
 			public void run() {
 				// TODO Auto-generated method stub
 				System.out.println("Run vip management cost check......");
-				for (BaseModel bm : SerialDatabase.getInstance().get(Account.class)) {
-					Account account = (Account) bm;
+				for (Account account : accountDao.get()) {
 					if (account.isVIP() && ! account.isFreezed()) {
 						int id = account.getId();
 						if (balanceSum.get(id) == null) {
@@ -56,7 +60,7 @@ public class BankTask {
 								if (preStatus.get(id).equals(true)) {
 									//扣除管理费
 									System.out.println(account);
-									account.setBalance(account.getBalance() - 1000);
+									account = accountDao.updateBalance(account.getId(), account.getBalance() - 1000);
 								}
 								preStatus.put(id, true);
 							}
@@ -82,22 +86,22 @@ public class BankTask {
 			public void run() {
 				// TODO Auto-generated method stub
 				System.out.println("Run account freezed check......");
-				for (BaseModel bm : SerialDatabase.getInstance().get(Account.class)) {
-					Account account = (Account) bm;
+				
+				for (Account account : accountDao.get()) {
 					if (account.isVIP()) {
 						if (dayCnt.get(account.getId()) == null) {
 							dayCnt.put(account.getId(), 0);
 						}
-						if (account.getBalance() >= 0) {
+						if (account.getBalance() >= 0) {//解冻帐户
 							dayCnt.put(account.getId(), 0);
-							account.setFreezed(false);
+							account = accountDao.changeStatus(account.getId(), false);
 						}
 						else {
 							int cnt = dayCnt.get(account.getId());
 							dayCnt.put(account.getId(), cnt + 1);
 						}
-						if (dayCnt.get(account.getId()) > 30) {
-							account.setFreezed(true);
+						if (dayCnt.get(account.getId()) > 30) {//冻结账户
+							account = accountDao.changeStatus(account.getId(), true);
 						}
 					}
 				}

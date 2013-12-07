@@ -227,8 +227,7 @@ public class UserAccountManager {
 		}
 		fromAccount = accountDao.updateBalance(fromAccount.getId(), fromAccount.getBalance() - money);
 		toAccount = accountDao.updateBalance(toAccount.getId(), toAccount.getBalance() + money);
-		UserAccount ua = new UserAccount(fromUser, fromAccount);//用户插入日志
-		Log log = LogManager.getInstance().recordOperation(employee, ua, toUa, 
+		Log log = LogManager.getInstance().recordOperation(employee, fromUa, toUa, 
 				"转账：" + money + "元" + (fromAccount.getBalance() < 0 ? " 账户处于透支状态" : ""), Log.Transfer);
 		return new Pair(fromAccount.getBalance(), log);
 	}

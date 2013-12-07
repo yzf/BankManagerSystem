@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 public class AccountDao implements IAccountDao {
 	
@@ -17,6 +18,8 @@ public class AccountDao implements IAccountDao {
 	private static final String UpdateBalance = "update `account` set `balance`=? where `id`=? limit 1";
 	private static final String Add = "insert into `account` (`username`, `a_type`, `u_type`, `balance`, `freezed`) values (?, ?, ?, ?, ?)";
 	private static final String Delete = "delete from `account` where `username`=? limit 1";
+	private static final String GetAll = "select * from `account`";
+	private static final String Freezed = "update `account` set `freezed`=? where `id`=? limit 1";
 
 	private Account generate(ResultSet rs) throws SQLException {
 		Account account = new Account();
@@ -136,5 +139,45 @@ public class AccountDao implements IAccountDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Vector<Account> get() {
+		// TODO Auto-generated method stub
+		Connection con = MysqlDatabase.getInstance().getConnection();
+		Vector<Account> ret = new Vector<Account>();
+		try {
+			PreparedStatement ps = con.prepareStatement(GetAll);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ret.add(generate(rs));
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	@Override
+	public Account changeStatus(int id, boolean isFreezed) {
+		// TODO Auto-generated method stub
+		Connection con = MysqlDatabase.getInstance().getConnection();
+		Account ant = null;
+		try {
+			PreparedStatement ps = con.prepareStatement(Freezed);
+			ps.setBoolean(1, isFreezed);
+			ps.setInt(2, id);
+			int cnt = ps.executeUpdate();
+			if (cnt > 0) {
+				ant = get(id);
+			}
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ant;
 	}
 }

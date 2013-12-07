@@ -67,8 +67,12 @@ public class UserDao implements IUserDao {
 	@Override
 	public User add(User user) {
 		// TODO Auto-generated method stub
+		User u = get(user.getIdentity());
+		if (u != null) {
+			return u;
+		}
 		Connection con = MysqlDatabase.getInstance().getConnection();
-		User u = null;
+		u = null;
 		try {
 			PreparedStatement ps = con.prepareStatement(Add);
 			ps.setString(1, user.getIdentity());
