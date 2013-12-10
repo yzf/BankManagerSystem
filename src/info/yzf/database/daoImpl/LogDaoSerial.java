@@ -37,7 +37,7 @@ public class LogDaoSerial implements ILogDao {
 		Vector<Log> logList = new Vector<Log>();
 		for (BaseModel bm : SerialDatabase.getInstance().get(Log.class)) {
 			Log log = (Log) bm;
-			if (log.getTop().getAccount().equals(account) && 
+			if (log.getTopUsername().equals(account.getUsername()) && 
 					log.getTime().compareTo(begin) >= 0 && 
 					log.getTime().compareTo(end) <= 0) {
 				logList.add(log);
@@ -52,7 +52,7 @@ public class LogDaoSerial implements ILogDao {
 		Vector<Log> logList = new Vector<Log>();
 		for (BaseModel bm : SerialDatabase.getInstance().get(Log.class)) {
 			Log log = (Log) bm;
-			if (log.getEmployee().equals(employee) && 
+			if (log.getEmpId() == employee.getId() && 
 					log.getTime().compareTo(begin) >= 0 && 
 					log.getTime().compareTo(end) <= 0) {
 				logList.add(log);
@@ -67,7 +67,7 @@ public class LogDaoSerial implements ILogDao {
 		Vector<Log> logList = new Vector<Log>();
 		for (BaseModel bm : SerialDatabase.getInstance().get(Log.class)) {
 			Log log = (Log) bm;
-			if (log.getEmployee().getDepartment().equals(department) && 
+			if (new EmployeeDao().get(log.getEmpId()).getDepartment().equals(department) && 
 					log.getTime().compareTo(begin) >= 0 && 
 					log.getTime().compareTo(end) <= 0) {
 				logList.add(log);

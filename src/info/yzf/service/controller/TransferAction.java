@@ -44,10 +44,11 @@ public class TransferAction extends HttpServlet {
 			Pair pair = UserAccountManager.getInstance().transfer(employee, fromIdentity, fromName, 
 										fromUsername, fromPassword, toName, toUsername, money);
 			Log log = (Log) pair.getSecond();
-			request.setAttribute("detail", "余额为：" + (double) pair.getFirst());
+			request.setAttribute("detail", "余额为：" + (double) pair.getFirst() + "元");
 			request.setAttribute("log", log);
 			request.setAttribute("logTime", log.getFormatTime());
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("message", e.getLocalizedMessage());
 		}
 		request.getRequestDispatcher("result.jsp").forward(request, response);

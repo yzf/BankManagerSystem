@@ -58,23 +58,12 @@ public class LogManager {
 	}	
 	/**
 	 * 记录日志
-	 * @param employee
-	 * @param customer
-	 * @param account
-	 * @param time
-	 * @param operation
-	 * @return
-	 * @throws Exception 
 	 */
-	public Log recordOperation(Employee employee, UserAccount top,
-			UserAccount bottom, String operation, String type) throws Exception {
-		Log log = new Log(new Timestamp(System.currentTimeMillis()), 
-						employee, top, bottom, operation, type);
-		try {
-			log = logDao.add(log);
-		} catch (Exception e) {
-			throw new Exception(Message.LogFail);
-		}
+	public Log recordOperation(int empId, String empName, String topName, String topUsername, 
+			String bottomName, String bottomUsername, String operation, String type) throws Exception {
+		Log log = new Log(new Timestamp(System.currentTimeMillis()), empId, empName, topName, 
+						topUsername, bottomName, bottomUsername, operation, type);
+		log = logDao.add(log);
 		return log;
 	}
 	/**

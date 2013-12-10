@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>70</x>
+      <y>390</y>
+      <w>500</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>info.yzf.service.manager::EmployeeManager
+--
+-employeeDao: IEmployeeDao
+-departmentDao: IDepartmentDao
+-summaryDao: ISummaryDao
+--
+-EmployeeManager(): ctor
++getInstance(): EmployeeManager
++get(String username, String password): Employee
++add(String name, String username, String password, int type, int depId): Pair
++getDepartments(): Vector&lt;Department&gt;
++delete(String name, String username): void
++updatePassword(String username, String password): void
++updateInfo(String name, String username, int type, int depId): void
++submitSummary(Employee employee, String content): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>70</x>
+      <y>0</y>
+      <w>720</w>
+      <h>370</h>
+    </coordinates>
+    <panel_attributes>info.yzf.service.manager::UserAccountManager
+--
+-userDao: IUserDao
+-accountDao: IAccountDao
+-userAccountDao: IUserAccountDao
+-enterpriseAccountDao: IEnterpriseAccountDao
+--
+-UserAccountManager(): ctor
++getInstance(): UserAccountManager
++createAccount(Employee employee, String enterpriseIdentity, String enterpriseName,
+			String identity, String name, int uType, int aType, double balance, 
+			String password, String passwordAgain): Pair
++deposit(Employee employee, String username, String password, double money): Pair
++withdrawal(Employee employee, String username, String password, double money): Pair
++query(Employee employee, String identity, String username, String password): Pair
++transfer(Employee employee, String fromIdentity, String fromName, 
+			String fromUsername, String fromPassword, String toName, String toUsername, 
+			double money): Pair
++changePassword(Employee employee, String identity, String username, 
+			String oldPassword, String newPassword): Pair
++closeAccount(Employee employee, String identity, String username, String password): Pair
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>70</x>
+      <y>660</y>
+      <w>720</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>info.yzf.service.manager::LogManager
+--
+-logDao: ILogDao
+-customerAccountDao: IUserAccountDao
+-departentDao: IDepartmentDao
+-summaryDao: ISummaryDao
+-employeeDao: IEmployeeDao
+--
+-LogManager(): ctor
++getInstance(): LogManager
++recordOperation(Employee employee, UserAccount top, UserAccount bottom, String operation, String type): Log
++query(String identity, String username, String password, String begin, String end): Vector&lt;Log&gt;
++getPersonalReport(String username, Timestamp begin, Timestamp end): Report
++getDepReport(Employee e, int depId, Timestamp begin, Timestamp end): Report
++getBankReport(Employee e, Timestamp begin, Timestamp end): Report
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

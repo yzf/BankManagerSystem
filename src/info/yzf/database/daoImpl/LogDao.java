@@ -17,23 +17,26 @@ import java.util.Vector;
 public class LogDao implements ILogDao {
 	
 	private static final String GetById = "select * from `log` where `id`=? limit 1";
-	private static final String Add = "insert into `log` (`time`, `e_id`, `top_ua_id`, `bottom_ua_id`, `operation`, `type`) values (?, ?, ?, ?, ?, ?)";
-	private static final String GetA = "select l.id as id, l.time as time, l.e_id as e_id, l.top_ua_id as top_ua_id,"
-			+ " l.bottom_ua_id as bottom_ua_id, l.operation as operation, l.type as type"
-			+ " from `log` l, `user_account` ua where l.top_ua_id=ua.id and ua.a_id=? and l.time between ? and ?";
-	private static final String GetE = "select * from `log` where `e_id`=? and `time` between ? and ?";
-	private static final String GetD = "select l.id as id, l.time as time, l.e_id as e_id, l.top_ua_id as top_ua_id,"
-			+ " l.bottom_ua_id as bottom_ua_id, l.operation as operation, l.type as type"
-			+ " from `log` l, `employee` e where l.e_id=e.id and e.dep_id=? and `time` between ? and ?";
+	private static final String Add = "insert into `log` (`time`, `emp_id`, `emp_n`, `top_u_n`, `top_a_un`, `bottom_u_n`, `bottom_a_un`, `operation`, `type`) values (?,?,?,?,?,?,?,?,?)";
+	private static final String GetA = "select l.id as id, l.time as time, l.emp_id as emp_id, l.emp_n as emp_n, l.top_u_n as top_u_n, l.top_a_un as top_a_un,"
+			+ " l.bottom_u_n as bottom_u_n, l.bottom_a_un as bottom_a_un, l.operation as operation, l.type as type"
+			+ " from `log` l, `account` a where l.top_a_un=a.username and a.username=? and time between ? and ?";
+	private static final String GetE = "select * from `log` where `emp_id`=? and `time` between ? and ?";
+	private static final String GetD = "select l.id as id, l.time as time, l.emp_n as emp_n, l.top_u_n as top_u_n, l.top_a_un as top_a_un,"
+			+ " l.bottom_u_n as bottom_u_n, l.bottom_a_un as bottom_a_un, l.operation as operation, l.type as type"
+			+ " from `log` l, `employee` e where l.emp_id=e.id and e.dep_id=? and `time` between ? and ?";
 	private static final String GetAll = "select * from `log` l where `time` between ? and ?";
 	
 	private Log generate(ResultSet rs) throws SQLException {
 		Log log = new Log();
 		log.setId(rs.getInt("id"));
 		log.setTime(rs.getTimestamp("time"));
-		log.setEmployee(new EmployeeDao().get(rs.getInt("e_id")));
-		log.setTop(new UserAccountDao().get(rs.getInt("top_ua_id")));
-		log.setBottom(new UserAccountDao().get(rs.getInt("bottom_ua_id")));
+		log.setEmpId(rs.getInt("emp_id"));
+		log.setEmpName(rs.getString("emp_n"));
+		log.setTopName(rs.getString("top_u_n"));
+		log.setTopUsername(rs.getString("top_a_un"));
+		log.setBottomName(rs.getString("bottom_u_n"));
+		log.setBottomUsername(rs.getString("bottom_a_un"));
 		log.setOperation(rs.getString("operation"));
 		log.setType(rs.getString("type"));
 		return log;
@@ -66,16 +69,14 @@ public class LogDao implements ILogDao {
 		try {
 			PreparedStatement ps = con.prepareStatement(Add, PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setTimestamp(1, log.getTime());
-			ps.setInt(2, log.getEmployee().getId());
-			ps.setInt(3, log.getTop().getId());
-			if (log.getBottom() != null) {
-				ps.setInt(4, log.getBottom().getId());
-			}
-			else {
-				ps.setInt(4, 0);
-			}
-			ps.setString(5, log.getOperation());
-			ps.setString(6, log.getType());
+			ps.setInt(2, log.getEmpId());
+			ps.setString(3, log.getEmpName());
+			ps.setString(4, log.getTopName());
+			ps.setString(5, log.getTopUsername());
+			ps.setString(6, log.getBottomName());
+			ps.setString(7, log.getBottomUsername());
+			ps.setString(8, log.getOperation());
+			ps.setString(9, log.getType());
 			int cnt = ps.executeUpdate();
 			if (cnt > 0) {
 				ResultSet rs = ps.getGeneratedKeys();
@@ -98,7 +99,7 @@ public class LogDao implements ILogDao {
 		Vector<Log> ret = new Vector<Log>();
 		try {
 			PreparedStatement ps = con.prepareStatement(GetA);
-			ps.setInt(1, account.getId());
+			ps.setString(1, account.getUsername());
 			ps.setTimestamp(2, begin);
 			ps.setTimestamp(3, end);
 			ResultSet rs = ps.executeQuery();

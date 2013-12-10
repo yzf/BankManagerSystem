@@ -154,16 +154,16 @@
 					out.print("<tr>");
 					out.print("<td>" + (i + 1) + "</td>");
 					out.print("<td>" + l.getFormatTime() + "</td>");
-					out.print("<td>" + l.getEmployee().getName() + "</td>");
-					out.print("<td>" + l.getTop().getUser().getName() + "</td>");
-					out.print("<td>" + l.getTop().getAccount().getUsername() + "</td>");
+					out.print("<td>" + l.getEmpName() + "</td>");
+					out.print("<td>" + l.getTopName() + "</td>");
+					out.print("<td>" + l.getTopUsername() + "</td>");
 					out.print("<td>" + l.getOperation() + "</td>");
 					if (l.getType().equals(Log.Transfer)) {
-						out.print("<td>转入方为：" + l.getBottom().getUser().getName() +
-								" " + l.getBottom().getAccount().getUsername() + "</td>");	
+						out.print("<td>转入方为：" + l.getBottomName() +
+								" " + l.getBottomUsername() + "</td>");	
 					}
 					else if (l.getType().equals(Log.Other)) {
-						out.print("<td>被处理的操作人为：" + l.getBottom().getUser().getName() + "</td>");
+						out.print("<td>被处理的操作人为：" + l.getBottomName() + "</td>");
 					}
 					else {
 						out.print("<td></td>");

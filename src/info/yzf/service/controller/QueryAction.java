@@ -49,7 +49,7 @@ public class QueryAction extends HttpServlet {
 			else {
 				Pair pair = UserAccountManager.getInstance().query(employee, identity, username, password);
 				Log log = (Log) pair.getSecond();
-				request.setAttribute("detail", "余额为：" + (double) pair.getFirst());
+				request.setAttribute("detail", "余额为：" + (double) pair.getFirst() + "元");
 				request.setAttribute("log", log);
 				request.setAttribute("logTime", log.getFormatTime());
 			}

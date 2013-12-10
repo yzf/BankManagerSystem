@@ -28,13 +28,13 @@
 			<% if (log != null) { %>
 				<h3>日志：</h3>
 				<p>时间 <%= Util.formatDay(log.getTime()) %></p>
-				<p>操作员 <%= log.getEmployee().getName() %></p>
-				<p>客户 <%= log.getTop().getUser().getName() %></p>
-				<p>帐户 <%= log.getTop().getAccount().getUsername() %></p>
-				<% if (log.getBottom() != null) { %>
-					<p>客户 <%= log.getBottom().getUser().getName() %></p>
+				<p>操作员 <%= log.getEmpName() %></p>
+				<p>客户 <%= log.getTopName() %></p>
+				<p>帐户 <%= log.getTopUsername() %></p>
+				<% if (! log.getBottomName().equals("")) { %>
+					<p>客户 <%= log.getBottomName() %></p>
 				
-					<p>帐户 <%= log.getBottom().getAccount().getUsername() %></p>
+					<p>帐户 <%= log.getBottomUsername() %></p>
 				<%} %>
 				<p>操作 <%= log.getOperation() %></p>
 			<%} %>
@@ -56,9 +56,9 @@
 							out.print("<tr>");
 							out.print("<th>" + (i + 1) + "</th>");
 							out.print("<th>" + Util.formatDay(logs.get(i).getTime()) + "</th>");
-							out.print("<th>" + logs.get(i).getEmployee().getName() + "</th>");
-							out.print("<th>" + logs.get(i).getTop().getUser().getName() + "</th>");
-							out.print("<th>" + logs.get(i).getTop().getAccount().getUsername() + "</th>");
+							out.print("<th>" + logs.get(i).getEmpName() + "</th>");
+							out.print("<th>" + logs.get(i).getTopName() + "</th>");
+							out.print("<th>" + logs.get(i).getTopUsername()+ "</th>");
 							out.print("<th>" + logs.get(i).getOperation() + "</th>");
 							out.print("</tr>");
 						%>

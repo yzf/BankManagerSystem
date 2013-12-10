@@ -41,7 +41,7 @@ public class DepositAction extends HttpServlet {
 			//日志
 			double balance = (double) pair.getFirst();
 			Log log = (Log) pair.getSecond();
-			request.setAttribute("detail", "余额为：" + balance);
+			request.setAttribute("detail", "余额为：" + balance + "元");
 			request.setAttribute("log", log);
 			request.setAttribute("logTime", log.getFormatTime());
 		} catch (Exception e) {

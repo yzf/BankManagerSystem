@@ -23,23 +23,27 @@ public class Log extends BaseModel implements Serializable, Comparable<Log> {
 	public static String Other = "其他";
 	
 	private Timestamp time;//时间
-	private Employee employee;//雇员
-	private UserAccount top;//攻方
-	private UserAccount bottom;//受方
+	private int empId;//员工id
+	private String empName;//员工名
+	private String topName;//攻方的名称
+	private String topUsername;//攻方的帐号
+	private String bottomName;//受方的名称
+	private String bottomUsername;//受方的账号
 	private String operation;//详细操作
-	private String type;
+	private String type;//操作类型
 	
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("时间:" + getFormatTime() + "\t");
-		sb.append("员工:" + employee + "\t");
-		sb.append("客户:" + top.getUser() + "\t");
-		sb.append("帐户:" + top.getAccount() + "\t");
-		sb.append(bottom == null ? "" : "客户:" + bottom.getUser() + "\t");
-		sb.append(bottom == null ? "" : "帐户:" + bottom.getAccount() + "\t");
-		sb.append("操作:" + operation);
+		sb.append("员工:" + empName + "\t");
+		sb.append("客户:" + topName + "\t");
+		sb.append("帐户:" + topUsername + "\t");
+		sb.append(bottomName == "" ? "" : "客户:" + bottomName + "\t");
+		sb.append(bottomUsername == "" ? "" : "帐户:" + bottomUsername + "\t");
+		sb.append("操作:" + operation + "\t");
+		sb.append("操作类型:" + type);
 		return sb.toString();
 	}
 	
@@ -57,13 +61,17 @@ public class Log extends BaseModel implements Serializable, Comparable<Log> {
 		super();
 	}
 
-	public Log(Timestamp time, Employee employee, UserAccount top,
-			UserAccount bottom, String operation, String type) throws Exception {
+	public Log(Timestamp time, int empId, String empName, String topName,
+			String topUsername, String bottomName, String bottomUsername,
+			String operation, String type) {
 		super();
 		this.time = time;
-		this.employee = employee.clone();
-		this.top = top.clone();
-		this.bottom = (bottom != null ? bottom.clone() : null);
+		this.empId = empId;
+		this.empName = empName;
+		this.topName = topName;
+		this.topUsername = topUsername;
+		this.bottomName = bottomName;
+		this.bottomUsername = bottomUsername;
 		this.operation = operation;
 		this.type = type;
 	}
@@ -76,28 +84,52 @@ public class Log extends BaseModel implements Serializable, Comparable<Log> {
 		this.time = time;
 	}
 
-	public Employee getEmployee() {
-		return employee;
+	public int getEmpId() {
+		return empId;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setEmpId(int empId) {
+		this.empId = empId;
 	}
 
-	public UserAccount getTop() {
-		return top;
+	public String getEmpName() {
+		return empName;
 	}
 
-	public void setTop(UserAccount top) {
-		this.top = top;
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
 
-	public UserAccount getBottom() {
-		return bottom;
+	public String getTopName() {
+		return topName;
 	}
 
-	public void setBottom(UserAccount bottom) {
-		this.bottom = bottom;
+	public void setTopName(String topName) {
+		this.topName = topName;
+	}
+
+	public String getTopUsername() {
+		return topUsername;
+	}
+
+	public void setTopUsername(String topUsername) {
+		this.topUsername = topUsername;
+	}
+
+	public String getBottomName() {
+		return bottomName;
+	}
+
+	public void setBottomName(String bottomName) {
+		this.bottomName = bottomName;
+	}
+
+	public String getBottomUsername() {
+		return bottomUsername;
+	}
+
+	public void setBottomUsername(String bottomUsername) {
+		this.bottomUsername = bottomUsername;
 	}
 
 	public String getOperation() {
@@ -115,4 +147,5 @@ public class Log extends BaseModel implements Serializable, Comparable<Log> {
 	public void setType(String type) {
 		this.type = type;
 	}
+
 }
