@@ -1,7 +1,5 @@
 package info.yzf.service.controller;
 
-import info.yzf.database.SerialDatabase;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -24,7 +22,6 @@ public class LogoutAction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		SerialDatabase.getInstance().save();
 		request.getSession().invalidate();
 		response.sendRedirect("home.jsp");
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>BankManagerSystem</display-name>
+  <display-name>BMS_Mysql</display-name>
   <welcome-file-list>
     <welcome-file>home.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
@@ -21,7 +21,6 @@
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <!-- 身份过滤器 -->
   <filter>
     <filter-name>RoleFilter</filter-name>
     <filter-class>info.yzf.service.RoleFilter</filter-class>
@@ -53,7 +52,7 @@
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/password.jsp</url-pattern>
-  </filter-mapping> 
+  </filter-mapping>
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/query.jsp</url-pattern>
@@ -66,20 +65,10 @@
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/transfer.jsp</url-pattern>
   </filter-mapping>
-  
   <filter-mapping>
     <filter-name>RoleFilter</filter-name>
     <url-pattern>/admin.jsp</url-pattern>
   </filter-mapping>
-  <!-- Servlet的配置 -->
-  <servlet>
-    <servlet-name>SerialDB</servlet-name>
-    <servlet-class>info.yzf.service.controller.SerialDBAction</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SerialDB</servlet-name>
-    <url-pattern>/SerialDB.do</url-pattern>
-  </servlet-mapping>
   <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>info.yzf.service.controller.LoginAction</servlet-class>
