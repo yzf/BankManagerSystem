@@ -27,9 +27,6 @@ public class EmployeeManager {
 	private ISummaryDao summaryDao;
 	
 	private EmployeeManager() {
-//		employeeDao = new EmployeeDaoSerial();
-//		departmentDao = new DepartmentDaoSerial();
-//		summaryDao = new SummaryDaoSerial();
 		employeeDao = new EmployeeDao();
 		departmentDao = new DepartmentDao();
 		summaryDao = new SummaryDao();

@@ -36,10 +36,6 @@ public class UserAccountManager {
 	private IEnterpriseAccountDao enterpriseAccountDao;
 	
 	private UserAccountManager() {
-//		userDao = new UserDaoSerial();
-//		accountDao = new AccountDaoSerial();
-//		userAccountDao = new UserAccountDaoSerial();
-//		enterpriseAccountDao = new EnterpriseAccountDaoSerial();
 		userDao = new UserDao();
 		accountDao = new AccountDao();
 		userAccountDao = new UserAccountDao();

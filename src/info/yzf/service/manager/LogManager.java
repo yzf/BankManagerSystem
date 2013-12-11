@@ -37,11 +37,6 @@ public class LogManager {
 	private IEmployeeDao employeeDao;
 	
 	private LogManager() {
-//		logDao = new LogDaoSerial();
-//		customerAccountDao = new UserAccountDaoSerial();
-//		departentDao = new DepartmentDaoSerial();
-//		summaryDao = new SummaryDaoSerial();
-//		employeeDao = new EmployeeDaoSerial();
 		logDao = new LogDao();
 		customerAccountDao = new UserAccountDao();
 		departentDao = new DepartmentDao();

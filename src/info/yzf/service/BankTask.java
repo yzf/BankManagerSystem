@@ -17,7 +17,6 @@ public class BankTask {
 	private final long task1Delay = 0;
 	private final long task2Delay = 5000;
 	private final long day = 3600 * 24 * 1000;
-//	private IAccountDao accountDao = new AccountDaoSerial();
 	private IAccountDao accountDao = new AccountDao();
 	
 	private BankTask() {}
