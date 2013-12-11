@@ -196,9 +196,6 @@ public class UserAccountManager {
 			}
 		}
 		else {//个人用户转账
-			if (toUa == null) {
-				throw new Exception(Message.Mismatching);//用户信息有误
-			}
 			if (toUa.getAccount().isEnterprise()) {
 				throw new Exception(Message.Unauthorized);//个人用户不能转给企业用户
 			}
@@ -229,7 +226,7 @@ public class UserAccountManager {
 		fromAccount = accountDao.updateBalance(fromAccount.getId(), fromAccount.getBalance() - money);
 		toAccount = accountDao.updateBalance(toAccount.getId(), toAccount.getBalance() + money);
 		Log log = LogManager.getInstance().recordOperation(employee.getId(), employee.getName(), fromUser.getName(), fromAccount.getUsername(), 
-				toUa.getUser().getName(), toUa.getAccount().getUsername(), "转账：" + money + "元" + (fromAccount.getBalance() < 0 ? " 账户处于透支状态" : ""), Log.Transfer);
+				toUser.getName(), toUa.getAccount().getUsername(), "转账：" + money + "元" + (fromAccount.getBalance() < 0 ? " 账户处于透支状态" : ""), Log.Transfer);
 		return new Pair(fromAccount.getBalance(), log);
 	}
 	//修改密码
