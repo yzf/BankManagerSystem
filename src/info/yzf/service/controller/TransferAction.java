@@ -48,7 +48,6 @@ public class TransferAction extends HttpServlet {
 			request.setAttribute("log", log);
 			request.setAttribute("logTime", log.getFormatTime());
 		} catch (Exception e) {
-			e.printStackTrace();
 			request.setAttribute("message", e.getLocalizedMessage());
 		}
 		request.getRequestDispatcher("result.jsp").forward(request, response);
