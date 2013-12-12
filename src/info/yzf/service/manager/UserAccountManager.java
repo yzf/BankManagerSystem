@@ -67,7 +67,7 @@ public class UserAccountManager {
 		String operation;
 		
 		if (uType != Account.Enterprise) {//个人账户
-			if (aType == Account.VIP && balance < Million) {
+			if (uType == Account.VIP && balance < Million) {
 				throw new Exception(Message.VIP);//没有达到VIP资格（所有账户总存款达到一百万）
 			}
 			//添加
